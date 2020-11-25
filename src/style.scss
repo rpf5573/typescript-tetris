@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+$yellow: #efcc19;
+$white: #fff;
+$screenPadding: 8px;
+$screenBorderWidth: 2px;
+$matrixPadding: 4px;
+$matrixBorderWidth: $screenBorderWidth;
+$statusPadding: $matrixPadding;
+$statusBorderWidth: $matrixBorderWidth;
+$blockPadding: 4px;
+$blockBorderWidth: 2px;
+$blockMarginRight: 2px;
+$blockMarginBottom: 2px;
+$blockContentWidth: 43px;
+$blockContentHeight: $blockContentWidth;
+$blockWidth: $blockContentWidth + $blockMarginRight;
+$blockHeight: $blockContentHeight + $blockMarginBottom;
+$blockInnerWidth: $blockContentWidth - ($blockPadding*2 + $blockBorderWidth*2);
+$blockInnerHeight: $blockInnerWidth;
+
+$matrixContentWidth: $blockWidth*10;
+$matrixContentHeight: $blockHeight*20;
+$statusContentWidth: 250px;
+$statusContentHeight: $matrixContentHeight;
+$matrixWidth: $matrixContentWidth + $matrixPadding*2 + $matrixBorderWidth*2;
+$matrixHeight: $matrixContentHeight + $matrixPadding*2 + $matrixBorderWidth*2;
+$statusWidth: $statusContentWidth + $statusPadding*2 + $statusBorderWidth*2;
+$statusHeight: $matrixHeight;
+$screenWidth: $matrixWidth + $statusWidth + $screenPadding*2 + $screenBorderWidth*2;
+$screenHeight: $matrixHeight + $screenPadding*2 + $screenBorderWidth*2;
+$wholeWidth: $screenWidth;
+$wholeHeight: $screenHeight;
+$logoWidth: $matrixWidth;
+$statusTitleHeight: $statusHeight/12;
+
+body {
+  font: 20px/1 HanHei SC,PingHei,PingFang SC,STHeitiSC-Light,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+
+#page {
+  overflow: hidden;
+
+  .bg{
+    background: url('./assets/bg.png') no-repeat;
+    overflow:hidden;
+  }
+
+  // next에서도 쓰니까 밖으로 빼놨다
+  .line {
+    overflow: auto;
+    &.active .b {
+      border: $blockBorderWidth solid black;
+      &:after { background: black; }
+    }
+    .b {
+      width: $blockContentWidth;
+      height: $blockContentHeight;
+      padding: $blockPadding;
+      border: $blockBorderWidth solid #879372;
+      margin-right: $blockMarginRight;
+      margin-bottom: $blockMarginBottom;
+      float: left;
+      &:after {
+        content: "";
+        display: block;
+        width: $blockInnerWidth;
+        height: $blockInnerHeight;
+        background: #879372;
+        overflow: hidden;
+      }
+      &.active {
+        border: $blockBorderWidth solid black;
+        &:after {
+          background: black;
+        }
+      }
+      &.blink {
+        &:after {
+          background: #560000;
+        }
+      }
+    }
+  }
+
+  & > .container {
+    width: $wholeWidth;
+    height: $wholeHeight;
+    box-shadow: inset 0 0 10px $white;
+    border-radius: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -($wholeHeight/2);
+    margin-left: -($wholeWidth/2);
+
+    .game-screen {
+      background: #9ead86;
+      padding: $screenPadding;
+      border: $screenBorderWidth solid #494536;
+      display: inline-flex;
+      width: $screenWidth;
+      height: $screenHeight;
+      .matrix {
+        position: relative;
+        border: $matrixBorderWidth solid #000;
+        padding: $matrixPadding;
+        width: $matrixWidth;
+        .logo {
+          position: absolute;
+          top: 38%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 224px;
+          height: 300px;
+          z-index: 9999;
+          display: none;
+          text-align: center;
+          overflow: hidden;
+          .dragon {
+            width: 160px;
+            height: 172px;
+            margin: 0 auto;
+            background-position: 0px -200px;
+            &.r1,&.l1 { background-position: 0 -200px; }
+            &.r2,&.l2 { background-position: -200px -200px; }
+            &.r3,&.l3 { background-position: -400px -200px; }
+            &.r4,&.l4 { background-position: -600px -200px; }
+            &.l1,&.l2,&.l3,&.l4{ transform: scale(-1, 1); } 
+          }
+          &.active {
+            display: block;
+          }
+          p {
+            width: 100%;
+            margin-top: 50px;
+            line-height: 1.4;
+            letter-spacing: 12px;
+            text-shadow: 1px 1px 1px hsla(0, 0%, 100%, 0.35);
+            font-size: 2rem;
+          }
+        }
+      }
+      .status {
+        width: $statusWidth;
+        border: $statusBorderWidth solid black;
+        padding: $statusPadding;
+        .pb-20 {padding-bottom: 20px;}
+        .pr-15 {padding-right: 15px;}
+        .pl-15 {padding-left: 15px;}
+        label {
+          height: $statusTitleHeight;
+          line-height: $statusTitleHeight - 10;
+          font-size: 2rem;
+          padding: 20px 0 0;
+          white-space: nowrap;
+          clear: both;
+          text-align: center;
+        }
+        .container.numbers {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          span {
+            width: 26px;
+            height: 46px;
+            display: block;
+
+            &.s_0{background-position:-150px -50px;}
+            &.s_1{background-position:-178px -50px;}
+            &.s_2{background-position:-206px -50px;}
+            &.s_3{background-position:-234px -50px;}
+            &.s_4{background-position:-262px -50px;}
+            &.s_5{background-position:-290px -50px;}
+            &.s_6{background-position:-318px -50px;}
+            &.s_7{background-position:-346px -50px;}
+            &.s_8{background-position:-374px -50px;}
+            &.s_9{background-position:-402px -50px;}
+            &.s_n{background-position:-430px -50px;}
+            &.s_d{background-position:-486px -50px;}
+            &.s_d_c{background-position:-458px -50px;}
+          }
+        }
+
+        .point {}
+        .start-lines {}
+        .speed {}
+        .next-block {
+          .container {
+            width: $blockWidth*4;
+            margin: 0 auto;
+          }
+        }
+      }
+    }
+  }
+}
